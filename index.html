@@ -31,11 +31,6 @@
   .hero-logo img{height:88px;width:auto;display:block;}
   @media (max-width:760px){ .hero-logo{padding:10px 16px;} .hero-logo img{height:58px;} }
 
-  .rule-strip{display:flex;gap:0;flex-wrap:wrap;margin:16px 0 20px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);}
-  .rule{flex:1;min-width:200px;padding:12px 16px;font-size:12.5px;color:var(--text2);display:flex;align-items:center;gap:9px;border-right:1px solid var(--line);}
-  .rule:last-child{border-right:none;}
-  .rule .tick{width:3px;align-self:stretch;border-radius:2px;flex:none;}
-  .rule b{color:var(--text);font-weight:600;font-family:'JetBrains Mono';}
 
   /* Board summary strip */
   .board{background:var(--navy);border-radius:14px;padding:4px 4px;margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));overflow:hidden;}
@@ -121,12 +116,6 @@
   </div>
 </div>
 <div class="wrap">
-
-<div class="rule-strip">
-  <div class="rule"><span class="tick" style="background:#2563a6"></span>Dry cut off = <b>ETA − 24h</b></div>
-  <div class="rule"><span class="tick" style="background:#1a7862"></span>Reefer cut off = <b>ETA − 1h</b></div>
-  <div class="rule"><span class="tick" style="background:var(--amber-strong)"></span>1st Return (empty return) = <b>ETD − 5d</b> (incl. ETD, by date)</div>
-</div>
 
 <div class="board" id="summary"></div>
 
