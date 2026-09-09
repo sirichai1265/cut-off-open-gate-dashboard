@@ -4,7 +4,12 @@ Rebuild "Cut off / Open gate dashboard.html" from a daily CUT_OFF-style .xls fil
 and a Wharf.xls code-to-name lookup.
 
 Usage:
-    python3 build_dashboard.py CUT_OFF.xls Wharf.xls -o "Cut off - Open Gate Dashboard.html"
+    python build_dashboard.py 9-9-CUT.xls
+        -> rebuilds both "Cut off - Open Gate Dashboard.html" and index.html
+           using the built-in wharf map.
+    python build_dashboard.py 9-9-CUT.xls Wharf.xls   # optional explicit wharf lookup
+
+Or just run update.ps1 (see that file) to rebuild + git push in one step.
 
 Requirements:
     pip install xlrd
@@ -25,6 +30,93 @@ try:
     import xlrd
 except ImportError:
     sys.exit("Missing dependency. Install it first:  pip install xlrd")
+
+
+# Wharf code -> full name. Used when no Wharf.xls is supplied. Edit here if a
+# new wharf code appears (the build prints a warning listing any it doesn't know).
+DEFAULT_WHARF_MAP = {
+    "BKK00": "BKK LESSOR'S DEPOT",
+    "BKK01": "PAT TERMINAL 2 (PORT AUTHORITY OF THAILAND)",
+    "BKK02": "UNITHAI CONTAINER TERMINAL",
+    "BKK03": "BDS TERMINAL",
+    "BKK04": "PAT TERMINAL 1 (PORT AUTHORITY OF THAILAND)",
+    "BKK05": "THAI HANJIN LAT KRABANG",
+    "BKK06": "THAI HANJIN LATKRABANG K.PUKPIK",
+    "BKK07": "STAR PACIFIC",
+    "BKK08": "THAI INTER DEPOT AND TRANSPORT",
+    "BKK09": "GREATING FORTUNE CONTAINER SERVICE (THAILAND) CO.,LTD",
+    "BKK10": "Thai Sugar Container Terminal",
+    "BKK11": "Siam River Port Co., Ltd (SRP)",
+    "BKK21": "TIGER DEPOT",
+    "BKK22": "555",
+    "BKK23": "CDS(CONTAINER DEPOT SERVICE CO LTD)",
+    "BKK24": "YJC DEPOT SERVICE CO LTD",
+    "BKK25": "Smart Logistics Service (Thailand ) Co.,Ltd.",
+    "BKK26": "B.C. DEPOT CO.,LTD. (KLONGTOEY)",
+    "BKK27": "B.C. DEPOT CO.,LTD. ( Bang-Na KM.18)",
+    "BKK28": "YJC DEPOT SERVICES CO LTD ( YJC BKK2 )",
+    "BKK99": "SHPR OR CNEE'S PREMISE",
+    "BKKF1": "FMC SERVICES KM.21",
+    "BKKM1": "PORT AUTHORITY OF THAILAND (P.A.T.)",
+    "BKKM3": "SAHATHAI COASTAL SEAPORT CO LTD / Code 0513",
+    "BKKM4": "Thai Prosperity Terminal (TPT)",
+    "BKKY4": "BMT PACIFIC LTD.",
+    "BKKY5": "Sintanachote Co.,Ltd.",
+    "BKKY6": "B.C. DEPOT CO,LTD. (BANG NA-TRAD  KM. 13)",
+    "BKKZZ": "BKK LOADING/DISCHARGING PIER",
+    "LCH00": "LCH LESSOR'S DEPOT",
+    "LCH01": "ESCO (EASTERN SEA LCH CNTR TML/B3)",
+    "LCH02": "A2 ( Thai Laemchabang Terminal, TLT / 허치슨 )",
+    "LCH03": "B4 TIPS CONTAINERR TERMINAL",
+    "LCH04": "LCMT Company LTD, ( under LCB1 Group)  A0",
+    "LCH05": "B5 LCIT (LAEM CHABANG INTERNATIONAL TERMINAL CO., LTD)",
+    "LCH06": "A3 (Hutchison Laemchabang Terminal Limited, HLT)",
+    "LCH07": "B1 ( LCB container terminal 1 , LCB1 )",
+    "LCH08": "Hutchison laemchabang terminal( C1,C2 )",
+    "LCH09": "Hutchison laemchabang terminal( D1 )",
+    "LCH10": "LCIT(C3) LAEM CHABANG INTERNATIONAL TERMINAL CO., LTD",
+    "LCH20": "YJC DEPOT (YJC THAILAND)",
+    "LCH21": "Reefer Express CO.,LTD.",
+    "LCH22": "CONTPOOL LCH",
+    "LCH23": "SINGSAMUT 28 DEPOT CO LTD",
+    "LCH24": "CDS (CONTAINER DEPOT SERVICE)",
+    "LCH25": "SCS Yard Co Ltd.",
+    "LCH26": "PH Depot Co Ltd ( Laemchabang )",
+    "LCH27": "HAST Logistics Co.,Ltd.",
+    "LCH28": "CELLO",
+    "LCH51": "THAI HANJIN LATKRABANG",
+    "LCH52": "SCT (Siam Container Terminal)",
+    "LCH53": "JWD (FOR DG CARGO)",
+    "LCH54": "TIFFA ICD LKB",
+    "LCH55": "ICD LKT - Esco Ladkrabang (GATE 2)",
+    "LCH99": "SHPR OR CNEE'S PREMISE",
+    "LCHA3": "Hutchison Laemchabang Terminal Ltd. A3 / Code 2829",
+    "LCHB1": "LCB CONTAINER TERMINAL 1 LTD. (B1) / Code 2811",
+    "LCHB2": "EVERGREEN CONTAINER TERMINAL (THAILAND) LTD. / Code 2812",
+    "LCHB3": "EASTERN SEA LAEM CHABANG TERMINAL CO. LTD. / Code 2813",
+    "LCHB4": "TIPS CO. LTD. B4 / Code 2814",
+    "LCHC1": "HUTCHISON LAEMCHABANG TERMINAL LTD (C1&C2) / Code 2836",
+    "LCHD1": "Hutchison laemchabang Terminal LTD ( D1 ) (customs code 2840)",
+    "LCHE1": "THAI ENGKONG LCH",
+    "LCHF1": "FORTRESS LCH",
+    "LCHG1": "GREATING FORTUNE LCH",
+    "LCHKC": "Kittichai  Container  Depot  Co.,Ltd.",
+    "LCHL1": "LAEMCHABANG INTER DEPOT",
+    "LCHM1": "THAI LAEMCHABANG TERMINAL CO. LTD.",
+    "LCHM2": "HUTCHISON LAEMCHABANG TERMINAL LIMITED",
+    "LCHM3": "LCB CONTAINER TERMINAL 1 LTD.",
+    "LCHM4": "LAEM CHABANG INTERNATIONAL TERMINAL CO. LTD.",
+    "LCHM5": "TIPS CO. LTD.",
+    "LCHM6": "EASTERN SEA LAEM CHABANG TERMINAL CO. LTD.",
+    "LCHM7": "KERRY SIAM SEAPORT LIMITED.",
+    "LCHS1": "SRITHAI FREIGHT FORWARDER LCH",
+    "LCHY2": "JWD INFO LOGISTICS CO., LTD",
+    "LCHY3": "EVERGREEN CONTAINER TERMINAL (THAILAND) LTD.",
+    "LCHY4": "SIAM CONTAINER TRANSPORT AND TERMINAL CO., LTD",
+    "LCHY5": "PW DEPOT CO., LTD.",
+    "LCHY6": "Smart Logistics Service (Thailand ) Co.,Ltd. / Laem Chabang",
+    "LCHZZ": "LCH LOADING/DISCHARGING PIER",
+}
 
 
 def parse_dt(v):
@@ -93,7 +185,8 @@ def check_wharf_coverage(records, wharf_map):
     used = {r["wharf"] for r in records}
     missing = used - set(wharf_map.keys())
     if missing:
-        print(f"Warning: {len(missing)} wharf code(s) not found in Wharf.xls: {sorted(missing)}")
+        print(f"Warning: {len(missing)} wharf code(s) have no name mapping "
+              f"(add them to DEFAULT_WHARF_MAP in build_dashboard.py): {sorted(missing)}")
 
 
 TEMPLATE = """<!DOCTYPE html>
@@ -503,24 +596,35 @@ def build_html(records, wharf_map, source_filename):
     return html
 
 
+DEFAULT_OUTPUTS = ["Cut off - Open Gate Dashboard.html", "index.html"]
+
+
 def main():
     ap = argparse.ArgumentParser(description="Rebuild the Cut off / Open gate dashboard.")
     ap.add_argument("cutoff_xls", help="Path to the daily CUT_OFF-style .xls file")
-    ap.add_argument("wharf_xls", help="Path to Wharf.xls (Wharf code -> Wharf Name)")
-    ap.add_argument("-o", "--output", default="Cut off - Open Gate Dashboard.html",
-                     help="Output HTML path (default: %(default)s)")
+    ap.add_argument("wharf_xls", nargs="?",
+                     help="Optional Wharf.xls (Wharf code -> Wharf Name). "
+                          "If omitted, the built-in DEFAULT_WHARF_MAP is used.")
+    ap.add_argument("-o", "--output", action="append",
+                     help="Output HTML path (repeatable). "
+                          "Default: writes both %s" % " and ".join(DEFAULT_OUTPUTS))
     args = ap.parse_args()
 
     records = load_cutoff_records(args.cutoff_xls)
-    wharf_map = load_wharf_map(args.wharf_xls)
+    if args.wharf_xls:
+        wharf_map = load_wharf_map(args.wharf_xls)
+    else:
+        wharf_map = dict(DEFAULT_WHARF_MAP)
+        print(f"Using built-in wharf map ({len(wharf_map)} codes)")
     check_wharf_coverage(records, wharf_map)
 
-    html = build_html(records, wharf_map, args.cutoff_xls.split("/")[-1].split("\\\\")[-1])
+    src_name = args.cutoff_xls.replace("\\", "/").split("/")[-1]
+    html = build_html(records, wharf_map, src_name)
 
-    with open(args.output, "w", encoding="utf-8") as f:
-        f.write(html)
-
-    print(f"Done -> {args.output}")
+    for out in (args.output or DEFAULT_OUTPUTS):
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"Done -> {out}")
 
 
 if __name__ == "__main__":
