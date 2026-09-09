@@ -123,9 +123,9 @@ TEMPLATE = """<!DOCTYPE html>
   .hero h1{font-size:24px;font-weight:700;margin:0 0 6px;letter-spacing:-.01em;}
   .hero p{font-size:13px;color:#a9bccd;margin:0;max-width:520px;line-height:1.5;}
   .hero-mark{display:flex;align-items:center;gap:8px;color:#7fa8cb;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
-  .hero-logo{background:#fff;border-radius:12px;padding:12px 22px;flex:none;box-shadow:0 2px 12px rgba(0,0,0,.2);}
-  .hero-logo img{height:64px;width:auto;display:block;}
-  @media (max-width:760px){ .hero-logo img{height:48px;} }
+  .hero-logo{background:#fff;border-radius:12px;padding:14px 26px;flex:none;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+  .hero-logo img{height:88px;width:auto;display:block;}
+  @media (max-width:760px){ .hero-logo{padding:10px 16px;} .hero-logo img{height:58px;} }
 
   .rule-strip{display:flex;gap:0;flex-wrap:wrap;margin:16px 0 20px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);}
   .rule{flex:1;min-width:200px;padding:12px 16px;font-size:12.5px;color:var(--text2);display:flex;align-items:center;gap:9px;border-right:1px solid var(--line);}
