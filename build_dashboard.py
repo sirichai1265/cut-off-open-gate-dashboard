@@ -12,7 +12,7 @@ Requirements:
 Rules applied (matches the standing spec):
     - Cut off (Dry)    = ETA - 24 hours
     - Cut off (Reefer) = ETA - 1 hour
-    - Open gate        = ETD - 6 days
+    - Open gate        = ETD - 5 days
     - Rows where Skip == "Y" are excluded
     - Wharf codes are resolved to full names using Wharf.xls (code shown underneath)
 """
@@ -54,7 +54,7 @@ def load_cutoff_records(xls_path):
 
         cutoff_dry = eta_dt - timedelta(hours=24)
         cutoff_reefer = eta_dt - timedelta(hours=1)
-        opengate = etd_dt - timedelta(days=6)
+        opengate = etd_dt - timedelta(days=5)
 
         records.append({
             "service": service, "vessel_code": vessel_code, "vessel": vessel_name,
@@ -166,6 +166,7 @@ TEMPLATE = """<!DOCTYPE html>
   .pol-bkk{background:var(--bkk-bg);color:var(--bkk);}
   .pol-lch{background:var(--lch-bg);color:var(--lch);}
   .vessel{font-weight:600;}
+  .vcode{font-family:'JetBrains Mono';font-size:10.5px;font-weight:600;color:var(--text2);background:var(--canvas);border:1px solid var(--line-strong);padding:0 5px;border-radius:4px;margin-left:6px;vertical-align:1px;}
   .sub{color:var(--muted);font-size:11.5px;margin-top:1px;}
   .dtcell{display:flex;flex-direction:column;line-height:1.4;font-family:'JetBrains Mono';}
   .dtcell .d{font-weight:500;}
@@ -220,7 +221,7 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="rule-strip">
   <div class="rule"><span class="tick" style="background:#2563a6"></span>Dry cut off = <b>ETA − 24h</b></div>
   <div class="rule"><span class="tick" style="background:#1a7862"></span>Reefer cut off = <b>ETA − 1h</b></div>
-  <div class="rule"><span class="tick" style="background:var(--amber-strong)"></span>Open gate (empty return) = <b>ETD − 6d</b></div>
+  <div class="rule"><span class="tick" style="background:var(--amber-strong)"></span>Open gate (empty return) = <b>ETD − 5d</b></div>
 </div>
 
 <div class="board" id="summary"></div>
@@ -362,6 +363,7 @@ function filterData(){
     const q = state.q;
     rows = rows.filter(r=>
       r.vessel.toLowerCase().includes(q) ||
+      (r.vessel_code||'').toLowerCase().includes(q) ||
       r.vyg_bound.toLowerCase().includes(q) ||
       r.service.toLowerCase().includes(q) ||
       r.wharf.toLowerCase().includes(q) ||
@@ -438,7 +440,7 @@ function renderTable(rows){
     return `<tr style="--rowaccent:${rowAccent(r)}">
       <td><span class="pol-badge ${polClass}">${r.pol}</span></td>
       <td>${r.service}</td>
-      <td><div class="vessel">${r.vessel}</div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
+      <td><div class="vessel">${r.vessel}<span class="vcode">${r.vessel_code}</span></div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
       <td><div class="vessel" style="font-weight:500">${WHARF_MAP[r.wharf]||r.wharf}</div><div class="sub">${r.wharf}</div></td>
       <td>${r.pod}</td>
       <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
@@ -475,7 +477,7 @@ function renderCards(rows){
       <div class="mcard-main">
         <div class="mcard-top">
           <div>
-            <div class="mcard-vessel">${r.vessel}</div>
+            <div class="mcard-vessel">${r.vessel}<span class="vcode">${r.vessel_code}</span></div>
             <div class="mcard-sub">${r.vyg_bound} · ${r.op_liner} · ${r.service}</div>
           </div>
         </div>
