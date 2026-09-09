@@ -1,6 +1,6 @@
 # Cut off / Open gate dashboard
 
-Live: **https://sirichai1265.github.io/cut-off-open-gate-dashboard/**
+Live: **https://sirichai1265.github.io/heung-a-cutoff/**
 
 ## Update with a new daily file
 

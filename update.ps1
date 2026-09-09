@@ -36,4 +36,4 @@ git push origin main
 
 Write-Host ""
 Write-Host "Pushed. GitHub Pages will refresh in ~1 minute:" -ForegroundColor Green
-Write-Host "  https://sirichai1265.github.io/cut-off-open-gate-dashboard/" -ForegroundColor Green
+Write-Host "  https://sirichai1265.github.io/heung-a-cutoff/" -ForegroundColor Green
