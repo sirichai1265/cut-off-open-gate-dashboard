@@ -150,7 +150,7 @@ TEMPLATE = """<!DOCTYPE html>
   .clearbtn:hover{background:#f3f5f6;}
 
   #tableHolder{overflow-x:auto;}
-  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--line);font-size:12.8px;}
+  table{width:auto;max-width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--line);font-size:12.8px;}
   thead th{background:var(--navy);text-align:left;padding:11px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9fb7cc;font-weight:600;cursor:pointer;white-space:nowrap;}
   thead th:hover{color:#fff;}
   thead th.sorted{color:var(--amber-strong);}
