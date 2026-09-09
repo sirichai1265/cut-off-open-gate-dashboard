@@ -326,7 +326,8 @@ document.getElementById('clearBtn').addEventListener('click', ()=>{
 const COLS = [
   {key:'pol', label:'POL'},
   {key:'service', label:'Service'},
-  {key:'vessel', label:'Vessel / Voyage'},
+  {key:'vessel_code', label:'Vessel'},
+  {key:'vessel', label:'Vessel Name / Voyage'},
   {key:'wharf', label:'Wharf'},
   {key:'pod', label:'Next Port'},
   {key:'eta', label:'ETA'},
@@ -440,7 +441,8 @@ function renderTable(rows){
     return `<tr style="--rowaccent:${rowAccent(r)}">
       <td><span class="pol-badge ${polClass}">${r.pol}</span></td>
       <td>${r.service}</td>
-      <td><div class="vessel">${r.vessel}<span class="vcode">${r.vessel_code}</span></div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
+      <td class="mono" style="font-weight:600">${r.vessel_code}</td>
+      <td><div class="vessel">${r.vessel}</div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
       <td><div class="vessel" style="font-weight:500">${WHARF_MAP[r.wharf]||r.wharf}</div><div class="sub">${r.wharf}</div></td>
       <td>${r.pod}</td>
       <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
