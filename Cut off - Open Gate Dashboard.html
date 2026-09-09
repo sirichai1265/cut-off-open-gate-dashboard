@@ -23,12 +23,12 @@
 
   /* Hero */
   .hero{background:var(--navy);background-image:linear-gradient(160deg,var(--navy) 0%,#0e2f52 60%,var(--navy2) 100%);color:#fff;padding:28px 20px 24px;margin-bottom:22px;}
-  .hero-inner{max-width:none;margin:0;display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .hero-inner{max-width:none;margin:0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .hero h1{font-size:24px;font-weight:700;margin:0 0 6px;letter-spacing:-.01em;}
   .hero p{font-size:13px;color:#a9bccd;margin:0;max-width:520px;line-height:1.5;}
   .hero-mark{display:flex;align-items:center;gap:8px;color:#7fa8cb;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
-  .hero-brand{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.14);}
-  .hero-brand svg{height:46px;width:auto;display:block;flex:none;}
+  .hero-logo{background:#fff;border-radius:10px;padding:9px 18px;flex:none;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+  .hero-logo svg{height:42px;width:auto;display:block;}
 
   .rule-strip{display:flex;gap:0;flex-wrap:wrap;margin:16px 0 20px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);}
   .rule{flex:1;min-width:200px;padding:12px 16px;font-size:12.5px;color:var(--text2);display:flex;align-items:center;gap:9px;border-right:1px solid var(--line);}
@@ -109,20 +109,20 @@
 <div class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-brand">
-        <svg viewBox="0 0 300 52" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HEUNG A LINE">
-          <circle cx="26" cy="26" r="25" fill="#ffffff"/>
-          <circle cx="26" cy="26" r="25" fill="none" stroke="#0d5aa7" stroke-width="2"/>
-          <circle cx="26" cy="26" r="16" fill="#c8102e"/>
-          <path d="M6 31 Q16 23 26 31 T46 31" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
-          <text x="26" y="23.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">HAL</text>
-          <text x="62" y="24" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing=".5">HEUNG A LINE</text>
-          <text x="63" y="42" font-family="Arial, sans-serif" font-size="10.5" fill="#a9bccd" letter-spacing="1">興亞 LINE 株式會社</text>
-        </svg>
-      </div>
       <div class="hero-mark">⚓ Terminal Gate Operations</div>
       <h1>Cut off / Open gate dashboard</h1>
       <p>POL THBKK &amp; THLCH — calculated from the vessel schedule (ETA / ETD), latest update from 9-9-CUT.xls</p>
+    </div>
+    <div class="hero-logo">
+      <svg viewBox="0 0 340 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HEUNG A LINE 興亞 LINE 株式會社">
+        <ellipse cx="31" cy="30" rx="30" ry="25" fill="#e9f2fc"/>
+        <ellipse cx="31" cy="30" rx="30" ry="25" fill="none" stroke="#0d5aa7" stroke-width="2.5"/>
+        <ellipse cx="31" cy="30" rx="21" ry="16" fill="#c8102e"/>
+        <path d="M8 33 Q19 24 31 33 T54 33" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+        <text x="31" y="34.5" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" font-style="italic" fill="#ffffff">HAL</text>
+        <text x="74" y="28" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#0d5aa7" letter-spacing=".5">HEUNG A LINE</text>
+        <text x="75" y="50" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#111111" letter-spacing="2">興亞 LINE 株式會社</text>
+      </svg>
     </div>
   </div>
 </div>
