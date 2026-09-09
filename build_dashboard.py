@@ -12,7 +12,7 @@ Requirements:
 Rules applied (matches the standing spec):
     - Cut off (Dry)    = ETA - 24 hours
     - Cut off (Reefer) = ETA - 1 hour
-    - Open gate        = ETD - 5 days
+    - 1st Return       = ETD - 5 days (counting ETD as day 1, time ignored)
     - Rows where Skip == "Y" are excluded
     - Wharf codes are resolved to full names using Wharf.xls (code shown underneath)
 """
@@ -54,7 +54,9 @@ def load_cutoff_records(xls_path):
 
         cutoff_dry = eta_dt - timedelta(hours=24)
         cutoff_reefer = eta_dt - timedelta(hours=1)
-        opengate = etd_dt - timedelta(days=5)
+        # 1st Return: 5 calendar days counting ETD as day 1, time ignored
+        etd_date = datetime(etd_dt.year, etd_dt.month, etd_dt.day)
+        opengate = etd_date - timedelta(days=4)
 
         records.append({
             "service": service, "vessel_code": vessel_code, "vessel": vessel_name,
@@ -221,7 +223,7 @@ TEMPLATE = """<!DOCTYPE html>
 <div class="rule-strip">
   <div class="rule"><span class="tick" style="background:#2563a6"></span>Dry cut off = <b>ETA − 24h</b></div>
   <div class="rule"><span class="tick" style="background:#1a7862"></span>Reefer cut off = <b>ETA − 1h</b></div>
-  <div class="rule"><span class="tick" style="background:var(--amber-strong)"></span>Open gate (empty return) = <b>ETD − 5d</b></div>
+  <div class="rule"><span class="tick" style="background:var(--amber-strong)"></span>1st Return (empty return) = <b>ETD − 5d</b> (incl. ETD, by date)</div>
 </div>
 
 <div class="board" id="summary"></div>
@@ -332,7 +334,7 @@ const COLS = [
   {key:'pod', label:'Next Port'},
   {key:'eta', label:'ETA'},
   {key:'etd', label:'ETD'},
-  {key:'opengate', label:'Open gate'},
+  {key:'opengate', label:'1st Return'},
   {key:'cutoff_dry', label:'Cut off (Dry)'},
   {key:'cutoff_reefer', label:'Cut off (Reefer)'},
 ];
@@ -414,7 +416,7 @@ function renderSummary(rows){
     {lbl:'THBKK / THLCH', val: `${bkkCount} / ${lchCount}`, small:false},
     {lbl:'Arriving next 7 days', val: upcoming7, small:false},
     {lbl:'Nearest cut off (dry)', val: nextCutoff ? `${nextCutoff.vessel} — ${fmtDT(nextCutoff.cutoffDryDT).d} ${fmtDT(nextCutoff.cutoffDryDT).t}` : '—', small:true},
-    {lbl:'Nearest open gate', val: nextGate ? `${nextGate.vessel} — ${fmtDT(nextGate.opengateDT).d} ${fmtDT(nextGate.opengateDT).t}` : '—', small:true},
+    {lbl:'Nearest 1st Return', val: nextGate ? `${nextGate.vessel} — ${fmtDT(nextGate.opengateDT).d}` : '—', small:true},
   ];
   document.getElementById('summary').innerHTML = cards.map(c=>`
     <div class="seg-stat"><div class="lbl">${c.lbl}</div><div class="val ${c.small?'small':''}">${c.val}</div></div>
@@ -447,7 +449,7 @@ function renderTable(rows){
       <td>${r.pod}</td>
       <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
       <td><div class="dtcell"><span class="d">${etd.d}</span><span class="t">${etd.t}</span></div></td>
-      <td><div class="dtcell"><span class="d">${og.d}${flagFor(r.opengateDT,24,'Open','flag-open')}</span><span class="t">${og.t}</span></div></td>
+      <td><div class="dtcell"><span class="d">${og.d}${flagFor(r.opengateDT,24,'Open','flag-open')}</span></div></td>
       <td><div class="dtcell"><span class="d">${cd.d}${flagFor(r.cutoffDryDT,24,'Closed')}</span><span class="t">${cd.t}</span></div></td>
       <td><div class="dtcell"><span class="d">${cr.d}${flagFor(r.cutoffReeferDT,6,'Closed')}${noLoad}</span><span class="t">${cr.t}</span></div></td>
     </tr>`;
@@ -488,7 +490,7 @@ function renderCards(rows){
           <div class="mcard-item"><div class="lbl">Next Port</div><div class="val">${r.pod}</div></div>
           <div class="mcard-item"><div class="lbl">ETA</div><div class="val">${eta.d}<span class="t">${eta.t}</span></div></div>
           <div class="mcard-item"><div class="lbl">ETD</div><div class="val">${etd.d}<span class="t">${etd.t}</span></div></div>
-          <div class="mcard-item full"><div class="lbl">Open gate</div><div class="val">${og.d}<span class="t">${og.t}</span>${flagFor(r.opengateDT,24,'Open','flag-open')}</div></div>
+          <div class="mcard-item full"><div class="lbl">1st Return</div><div class="val">${og.d}${flagFor(r.opengateDT,24,'Open','flag-open')}</div></div>
           <div class="mcard-item"><div class="lbl">Cut off (Dry)</div><div class="val">${cd.d}<span class="t">${cd.t}</span>${flagFor(r.cutoffDryDT,24,'Closed')}</div></div>
           <div class="mcard-item"><div class="lbl">Cut off (Reefer)</div><div class="val">${cr.d}<span class="t">${cr.t}</span>${flagFor(r.cutoffReeferDT,6,'Closed')}${noLoad}</div></div>
         </div>
