@@ -245,12 +245,24 @@ TEMPLATE = """<!DOCTYPE html>
   .clearbtn:hover{background:#f3f5f6;}
 
   #tableHolder{overflow:auto;max-height:calc(100vh - 16px);border:1px solid var(--line);border-radius:12px;}
-  table{width:100%;max-width:none;border-collapse:separate;border-spacing:0;background:var(--card);font-size:12.8px;}
-  thead th{position:sticky;top:0;z-index:6;background:var(--navy);text-align:left;padding:11px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9fb7cc;font-weight:600;cursor:pointer;white-space:nowrap;box-shadow:0 2px 6px rgba(11,37,64,.35);}
+  table{width:100%;max-width:none;table-layout:fixed;border-collapse:separate;border-spacing:0;background:var(--card);font-size:12.8px;}
+  thead th{position:sticky;top:0;z-index:6;background:var(--navy);text-align:left;padding:11px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9fb7cc;font-weight:600;cursor:pointer;white-space:nowrap;box-shadow:0 2px 6px rgba(11,37,64,.35);overflow:hidden;text-overflow:ellipsis;}
   thead th:hover{color:#fff;}
   thead th.sorted{color:var(--amber-strong);}
-  tbody td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;}
-  th.wharfcell, td.wharfcell{max-width:180px;white-space:normal;}
+  tbody td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  th.wharfcell, td.wharfcell{white-space:normal;}
+  /* column widths: pol, service, vessel, vessel-name, wharf, next-port, then the 5 date columns get the most room */
+  thead th:nth-child(1), tbody td:nth-child(1){width:5%;}
+  thead th:nth-child(2), tbody td:nth-child(2){width:5.5%;}
+  thead th:nth-child(3), tbody td:nth-child(3){width:6.5%;}
+  thead th:nth-child(4), tbody td:nth-child(4){width:14%;}
+  thead th:nth-child(5), tbody td:nth-child(5){width:7%;}
+  thead th:nth-child(6), tbody td:nth-child(6){width:6%;}
+  thead th:nth-child(7), tbody td:nth-child(7),
+  thead th:nth-child(8), tbody td:nth-child(8),
+  thead th:nth-child(9), tbody td:nth-child(9),
+  thead th:nth-child(10), tbody td:nth-child(10),
+  thead th:nth-child(11), tbody td:nth-child(11){width:11.2%;}
   tbody tr{position:relative;}
   tbody tr td:first-child{box-shadow:inset 4px 0 0 0 var(--rowaccent, transparent);}
   tbody tr:last-child td{border-bottom:none;}
