@@ -245,7 +245,7 @@ TEMPLATE = """<!DOCTYPE html>
   .clearbtn:hover{background:#f3f5f6;}
 
   #tableHolder{overflow:auto;max-height:calc(100vh - 16px);border:1px solid var(--line);border-radius:12px;}
-  table{width:auto;max-width:none;border-collapse:separate;border-spacing:0;background:var(--card);font-size:12.8px;}
+  table{width:100%;max-width:none;border-collapse:separate;border-spacing:0;background:var(--card);font-size:12.8px;}
   thead th{position:sticky;top:0;z-index:6;background:var(--navy);text-align:left;padding:11px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9fb7cc;font-weight:600;cursor:pointer;white-space:nowrap;box-shadow:0 2px 6px rgba(11,37,64,.35);}
   thead th:hover{color:#fff;}
   thead th.sorted{color:var(--amber-strong);}
