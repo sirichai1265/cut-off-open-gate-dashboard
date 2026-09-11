@@ -60,18 +60,20 @@
   thead th.sorted{color:var(--amber-strong);}
   tbody td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   th.wharfcell, td.wharfcell{white-space:normal;}
-  /* column widths: pol, service, vessel, vessel-name, wharf, next-port, then the 5 date columns get the most room */
-  thead th:nth-child(1), tbody td:nth-child(1){width:5%;}
-  thead th:nth-child(2), tbody td:nth-child(2){width:5.5%;}
-  thead th:nth-child(3), tbody td:nth-child(3){width:6.5%;}
+  /* column widths: pol, service, vessel, vessel-name, wharf (same as vessel-name), next-port, then the 5 date columns share the rest */
+  thead th:nth-child(1), tbody td:nth-child(1){width:4.5%;}
+  thead th:nth-child(2), tbody td:nth-child(2){width:5%;}
+  thead th:nth-child(3), tbody td:nth-child(3){width:6%;}
   thead th:nth-child(4), tbody td:nth-child(4){width:14%;}
-  thead th:nth-child(5), tbody td:nth-child(5){width:7%;}
-  thead th:nth-child(6), tbody td:nth-child(6){width:6%;}
+  thead th:nth-child(5), tbody td:nth-child(5){width:14%;}
+  thead th:nth-child(6), tbody td:nth-child(6){width:5.5%;}
   thead th:nth-child(7), tbody td:nth-child(7),
   thead th:nth-child(8), tbody td:nth-child(8),
   thead th:nth-child(9), tbody td:nth-child(9),
   thead th:nth-child(10), tbody td:nth-child(10),
-  thead th:nth-child(11), tbody td:nth-child(11){width:11.2%;}
+  thead th:nth-child(11), tbody td:nth-child(11){width:10.2%;}
+  .dtcell.dtcell-lg .d{font-size:15px;font-weight:600;}
+  .dtcell.dtcell-lg .t{font-size:13px;}
   tbody tr{position:relative;}
   tbody tr td:first-child{box-shadow:inset 4px 0 0 0 var(--rowaccent, transparent);}
   tbody tr:last-child td{border-bottom:none;}
@@ -371,8 +373,8 @@ function renderTable(rows){
       <td><div class="dtcell"><span class="d">${og.d}${flagFor(r.opengateDT,24,'Open','flag-open')}</span></div></td>
       <td><div class="dtcell"><span class="d">${cd.d}${flagFor(r.cutoffDryDT,24,'Closed')}</span><span class="t">${cd.t}</span></div></td>
       <td><div class="dtcell"><span class="d">${cr.d}${flagFor(r.cutoffReeferDT,6,'Closed')}${noLoad}</span><span class="t">${cr.t}</span></div></td>
-      <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
-      <td><div class="dtcell"><span class="d">${etd.d}</span><span class="t">${etd.t}</span></div></td>
+      <td><div class="dtcell dtcell-lg"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
+      <td><div class="dtcell dtcell-lg"><span class="d">${etd.d}</span><span class="t">${etd.t}</span></div></td>
     </tr>`;
   }).join('') + '</tbody>';
 
