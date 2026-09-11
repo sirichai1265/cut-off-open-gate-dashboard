@@ -59,6 +59,7 @@
   thead th:hover{color:#fff;}
   thead th.sorted{color:var(--amber-strong);}
   tbody td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  th.wharfcell, td.wharfcell{max-width:180px;white-space:normal;}
   tbody tr{position:relative;}
   tbody tr td:first-child{box-shadow:inset 4px 0 0 0 var(--rowaccent, transparent);}
   tbody tr:last-child td{border-bottom:none;}
@@ -239,11 +240,11 @@ const COLS = [
   {key:'vessel', label:'Vessel Name / Voyage'},
   {key:'wharf', label:'Wharf'},
   {key:'pod', label:'Next Port'},
-  {key:'eta', label:'ETA'},
-  {key:'etd', label:'ETD'},
   {key:'opengate', label:'1st Return'},
   {key:'cutoff_dry', label:'Cut off (Dry)'},
   {key:'cutoff_reefer', label:'Cut off (Reefer)'},
+  {key:'eta', label:'ETA'},
+  {key:'etd', label:'ETD'},
 ];
 
 function sortData(rows){
@@ -339,7 +340,8 @@ function renderTable(rows){
   let thead = '<thead><tr>' + COLS.map(c=>{
     const sorted = state.sortKey===c.key;
     const arrow = sorted ? (state.sortDir===1?' ▲':' ▼') : '';
-    return `<th data-key="${c.key}" class="${sorted?'sorted':''}">${c.label}${arrow}</th>`;
+    const wharfCls = c.key==='wharf' ? ' wharfcell' : '';
+    return `<th data-key="${c.key}" class="${sorted?'sorted':''}${wharfCls}">${c.label}${arrow}</th>`;
   }).join('') + '</tr></thead>';
 
   let tbody = '<tbody>' + rows.map(r=>{
@@ -352,13 +354,13 @@ function renderTable(rows){
       <td>${r.service}</td>
       <td class="mono" style="font-weight:600">${r.vessel_code}</td>
       <td><div class="vessel">${r.vessel}</div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
-      <td><div class="vessel" style="font-weight:500">${WHARF_MAP[r.wharf]||r.wharf}</div><div class="sub">${r.wharf}</div></td>
+      <td class="wharfcell"><div class="vessel" style="font-weight:500">${WHARF_MAP[r.wharf]||r.wharf}</div><div class="sub">${r.wharf}</div></td>
       <td>${r.pod}</td>
-      <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
-      <td><div class="dtcell"><span class="d">${etd.d}</span><span class="t">${etd.t}</span></div></td>
       <td><div class="dtcell"><span class="d">${og.d}${flagFor(r.opengateDT,24,'Open','flag-open')}</span></div></td>
       <td><div class="dtcell"><span class="d">${cd.d}${flagFor(r.cutoffDryDT,24,'Closed')}</span><span class="t">${cd.t}</span></div></td>
       <td><div class="dtcell"><span class="d">${cr.d}${flagFor(r.cutoffReeferDT,6,'Closed')}${noLoad}</span><span class="t">${cr.t}</span></div></td>
+      <td><div class="dtcell"><span class="d">${eta.d}</span><span class="t">${eta.t}</span></div></td>
+      <td><div class="dtcell"><span class="d">${etd.d}</span><span class="t">${etd.t}</span></div></td>
     </tr>`;
   }).join('') + '</tbody>';
 
