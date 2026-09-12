@@ -60,12 +60,13 @@
   thead th.sorted{color:var(--amber-strong);}
   tbody td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   th.wharfcell, td.wharfcell{white-space:normal;}
+  th.polcell, td.polcell{padding-left:8px;padding-right:8px;text-align:center;overflow:visible;}
   /* column widths: pol, service, vessel, vessel-name, wharf (same as vessel-name), next-port, then the 5 date columns share the rest */
-  thead th:nth-child(1), tbody td:nth-child(1){width:6%;}
-  thead th:nth-child(2), tbody td:nth-child(2){width:3.5%;}
+  thead th:nth-child(1), tbody td:nth-child(1){width:8%;}
+  thead th:nth-child(2), tbody td:nth-child(2){width:5%;}
   thead th:nth-child(3), tbody td:nth-child(3){width:6%;}
-  thead th:nth-child(4), tbody td:nth-child(4){width:14%;}
-  thead th:nth-child(5), tbody td:nth-child(5){width:14%;}
+  thead th:nth-child(4), tbody td:nth-child(4){width:12.25%;}
+  thead th:nth-child(5), tbody td:nth-child(5){width:12.25%;}
   thead th:nth-child(6), tbody td:nth-child(6){width:5.5%;}
   thead th:nth-child(7), tbody td:nth-child(7),
   thead th:nth-child(8), tbody td:nth-child(8),
@@ -355,7 +356,8 @@ function renderTable(rows){
     const sorted = state.sortKey===c.key;
     const arrow = sorted ? (state.sortDir===1?' ▲':' ▼') : '';
     const wharfCls = c.key==='wharf' ? ' wharfcell' : '';
-    return `<th data-key="${c.key}" class="${sorted?'sorted':''}${wharfCls}">${c.label}${arrow}</th>`;
+    const polCls = c.key==='pol' ? ' polcell' : '';
+    return `<th data-key="${c.key}" class="${sorted?'sorted':''}${wharfCls}${polCls}">${c.label}${arrow}</th>`;
   }).join('') + '</tr></thead>';
 
   let tbody = '<tbody>' + rows.map(r=>{
@@ -364,7 +366,7 @@ function renderTable(rows){
     const polClass = r.pol==='THBKK' ? 'pol-bkk' : 'pol-lch';
     const noLoad = r.no_l === 'Y' ? '<span class="noload">No load</span>' : '';
     return `<tr style="--rowaccent:${rowAccent(r)}">
-      <td><span class="pol-badge ${polClass}">${r.pol}</span></td>
+      <td class="polcell"><span class="pol-badge ${polClass}">${r.pol}</span></td>
       <td>${r.service}</td>
       <td class="mono" style="font-weight:600">${r.vessel_code}</td>
       <td><div class="vessel">${r.vessel}</div><div class="sub">${r.vyg_bound} · ${r.op_liner}</div></td>
