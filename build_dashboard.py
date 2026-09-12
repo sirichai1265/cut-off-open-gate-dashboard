@@ -288,16 +288,19 @@ TEMPLATE = """<!DOCTYPE html>
   .count{font-size:12px;color:var(--muted);margin:10px 2px 0;font-family:'JetBrains Mono';}
 
   /* Mobile ticket-stub card view */
-  .mcards{display:flex;flex-direction:column;gap:12px;}
+  .mcards{display:flex;flex-direction:column;gap:14px;}
   .mcard{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:relative;}
-  .mcard-main{flex:1;padding:14px 15px;min-width:0;}
+  .mcard-main{flex:1;padding:16px 18px;min-width:0;}
   .mcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
-  .mcard-vessel{font-weight:600;font-size:14px;}
-  .mcard-sub{color:var(--muted);font-size:11.3px;margin-top:2px;}
-  .mcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px;margin-top:12px;font-family:'JetBrains Mono';}
-  .mcard-item .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;font-family:'Space Grotesk';}
-  .mcard-item .val{font-size:12.6px;font-weight:500;}
-  .mcard-item .val .t{color:var(--muted);font-size:11px;font-weight:400;margin-left:4px;}
+  .mcard-vessel{font-weight:700;font-size:17px;}
+  .mcard-sub{color:var(--muted);font-size:13px;margin-top:3px;}
+  .mcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:14px;font-family:'JetBrains Mono';}
+  .mcard-item .lbl{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;font-family:'Space Grotesk';}
+  .mcard-item .val{font-size:16px;font-weight:600;line-height:1.35;}
+  .mcard-item .val .t{color:var(--muted);font-size:13.5px;font-weight:400;margin-left:5px;}
+  .mcard-item .val .flag{font-size:11px;padding:2px 8px;}
+  .mcard-item .val .noload{font-size:11px;}
+  .mcard-vessel .vcode{font-size:11.5px;}
   .mcard-item.full{grid-column:1 / -1;}
   .mcard-stub{width:46px;flex:none;background:var(--navy);position:relative;display:flex;align-items:center;justify-content:center;background-image:linear-gradient(180deg,var(--navy),#0e2f52);}
   .mcard-stub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;border-left:2px dashed rgba(255,255,255,.3);}
